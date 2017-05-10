@@ -26,8 +26,6 @@ public class SimObjectEditor : Editor
         ReorderableListGUI.Title("Actions");
         ReorderableListGUI.ListField(actions);
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("Seed"));
-
         serializedObject.ApplyModifiedProperties();
     }
 }
@@ -144,25 +142,25 @@ public class SimObjectInteractiveActionPersonalityModifierEditor : PropertyDrawe
     }
 }
 
-[CustomPropertyDrawer(typeof(SeedInfo))]
-public class SimObjectSeedInfoEditor : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty prop, GUIContent label) {
-        return 100;
-    }
+//[CustomPropertyDrawer(typeof(SeedInfo))]
+//public class SimObjectSeedInfoEditor : PropertyDrawer
+//{
+//    public override float GetPropertyHeight(SerializedProperty prop, GUIContent label) {
+//        return 100;
+//    }
 
-    public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label) {
-        position.height = 16;
-        EditorGUI.PropertyField(position, prop.FindPropertyRelative("Count"));
-        position.y += 20;
-        EditorGUI.PropertyField(position, prop.FindPropertyRelative("MaxSeedCount"));
-        position.y += 20;
-        EditorGUI.PropertyField(position, prop.FindPropertyRelative("MinSeedCount"));
-        position.y += 20;
-        EditorGUI.PropertyField(position, prop.FindPropertyRelative("NextSeed"));
-        position.y += 20;
-        EditorGUI.PropertyField(position, prop.FindPropertyRelative("SeedPeriodInMinutes"));
-    }
-}
+//    public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label) {
+//        position.height = 16;
+//        EditorGUI.PropertyField(position, prop.FindPropertyRelative("Count"));
+//        position.y += 20;
+//        EditorGUI.PropertyField(position, prop.FindPropertyRelative("MaxSeedCount"));
+//        position.y += 20;
+//        EditorGUI.PropertyField(position, prop.FindPropertyRelative("MinSeedCount"));
+//        position.y += 20;
+//        EditorGUI.PropertyField(position, prop.FindPropertyRelative("NextSeed"));
+//        position.y += 20;
+//        EditorGUI.PropertyField(position, prop.FindPropertyRelative("SeedPeriodInMinutes"));
+//    }
+//}
 
 

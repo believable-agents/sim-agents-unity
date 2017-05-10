@@ -49,10 +49,10 @@ public class SimSpawn : MonoBehaviour, IUpdates
         set { BehaviourConfiguration.DayLengthInSeconds = value; }
     }
 
-    public List<SimObject> SimObjects;
+    public List<SeedInfo> SimObjects;
 
     public void Init() {
-        this.SimObjects = new List<SimObject>();
+        this.SimObjects = new List<SeedInfo>();
         this.MinDecayRatePerSecond = 0.3f;
         this.MaxDecayRatePerSecond = 1f;
         this.MinInitialDecay = -50;
@@ -74,12 +74,12 @@ public class SimSpawn : MonoBehaviour, IUpdates
     public void Update() {
         // we will randomly put objects on the canvas
         foreach (var obj in this.SimObjects) {
-            if (obj.Seed.SeedPeriodInMinutes > 0 && obj.Seed.NextSeed < Time.time) {
-                var count = UnityEngine.Random.Range(obj.Seed.MinSeedCount, obj.Seed.MaxSeedCount);
+            if (obj.SeedPeriodInMinutes > 0 && obj.NextSeed < Time.time) {
+                var count = UnityEngine.Random.Range(obj.MinSeedCount, obj.MaxSeedCount);
                 for (var i = 0; i < count; i++) {
-                    this.SpawnObject(obj, i);
+                    this.SpawnObject(obj.gameObject, i);
                 }
-                obj.Seed.NextSeed += obj.Seed.SeedPeriodInMinutes * BehaviourConfiguration.SimulatedMinutesToReal;
+                obj.NextSeed += obj.SeedPeriodInMinutes * BehaviourConfiguration.SimulatedMinutesToReal;
             }
 
         }
@@ -147,13 +147,13 @@ public class SimSpawn : MonoBehaviour, IUpdates
 
     void SpawnObjects() {
         foreach (var obj in this.SimObjects) {
-            for (var k = 0; k < obj.Seed.Count; k++) {
-                this.SpawnObject(obj, k++);
+            for (var k = 0; k < obj.Count; k++) {
+                this.SpawnObject(obj.gameObject, k++);
             }
         }
     }
 
-    void SpawnObject(SimObject obj, int k) {
+    void SpawnObject(GameObject obj, int k) {
        
 
         // add position
@@ -161,8 +161,8 @@ public class SimSpawn : MonoBehaviour, IUpdates
             UnityEngine.Random.Range(minX, maxX),
             0,
             UnityEngine.Random.Range(minZ, maxZ));
-        var agent = GameObject.Instantiate(obj.gameObject, position, Quaternion.identity);
-        agent.name = obj.Name + "_" + k;
+        var agent = GameObject.Instantiate(obj, position, Quaternion.identity);
+        agent.name = obj.name + "_" + k;
 
         // add advertisement
         //var adv = agent.AddComponent<Ei.Agents.Sims.SimObject>();
